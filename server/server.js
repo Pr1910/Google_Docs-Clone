@@ -1,17 +1,21 @@
 const mongoose = require("mongoose");
 const Document = require("./Document");
+const dotenv = require('dotenv');
+
+
+dotenv.config();
 
 mongoose
-  .connect(
-    "mongodb+srv://user1:user123password@cluster0.p2p4e8m.mongodb.net/google-docs-clone?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Database Connected");
   });
 
-const io = require("socket.io")(3001, {
+  
+
+const io = require("socket.io")(process.env.PORT, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.FRONTEND_URL,
     method: ["GET", "POST"],
   },
 });
